@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <button id="inc">add</button>
+</body>
+
+<script src="./vdom.js"></script>
+<script src="./state-reactivity.js"></script>
+
+<!-- <script>
+    const app = $('#app')
+    // 创建span元素
+    const span = h('span', {}, 'hello world!')
+    // 创建h1元素，span是其子元素
+    const h1 = h('h1', {id: 'title'}, [span])
+    // 添加h1元素到app元素中（挂载虚拟节点）
+    mount(h1, app)
+</script> -->
+
+<!-- <script>
+    const state = {
+        count: 1
+    }
+
+    const state2 = {
+        num: 1
+    }
+
+    // 监听state所有属性
+    observe(state)
+    observe(state2)
+    function log() {
+        // console.log(`update state.count to ${state.count}`)
+        // 监听方法里，必须使用被监听对象
+        console.log('haha')
+    }
+    function log2() {
+        console.log(`update state2.num to ${state2.num}`)
+    }
+    // 关联上log函数
+    autorun(log)
+    autorun(log2)
+    setTimeout(() => {
+        state.count += 1
+    }, 2000)
+    setTimeout(() => {
+        state2.num += 10
+    }, 3000)
+
+</script> -->
+
+
+<script>
+
+    const btn = $('#inc')
+    const app = $('#app')
+
+    const state = {
+        count: 1
+    }
+    // 监听state所有属性
+    observe(state)
+    // 添加点击事件
+    btn.addEventListener('click', () => {
+        state.count += 6
+    })
+
+    let node = null
+    // 为state.count关联匿名方法
+    autorun(() => {
+        if (node) {
+            // 创建虚拟节点
+            const newNode = h('h1', {}, String(state.count))
+            // 替换虚拟节点
+            patch(node, newNode)
+            node = newNode
+        } else {
+            // 创建虚拟节点
+            node = h('h1', {}, String(state.count))
+            // 添加虚拟江门
+            mount(node, app)
+        }
+    })
+
+</script>
+</html>
